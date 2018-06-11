@@ -3,6 +3,7 @@
 #ifndef H_WORLD
 #define H_WORLD
 
+#include <mutex>
 #include "Actor.h"
 #include "Player.h"
 #include "ContactListener.h"
@@ -24,6 +25,7 @@ private:
 	int32 velocityIterations;
 	int32 positionIterations;
 
+	std::mutex mtx;
 	std::string m_ip_adress;
 	sf::TcpSocket socket;
 	sf::Thread thread_receive;

@@ -4,6 +4,7 @@
 Arrow::Arrow (b2Vec2 position, b2Vec2 velocity, b2World& physic_world, uint16 categoryBits, uint16 maskBits, Player& owner) : Actor(physic_world), m_owner(owner)
 {
 	m_moveSpeed = 30.0f;
+	m_position = position;
 	m_velocity = velocity;
 	m_contacting = false;
 	m_lifeTime = 5.0;
@@ -17,6 +18,7 @@ Arrow::Arrow (b2Vec2 position, b2Vec2 velocity, b2World& physic_world, uint16 ca
 	m_size = b2Vec2(texture_size.x, texture_size.y);
 	m_Sprite = sf::Sprite(m_Texture, sf::IntRect(0, 0, texture_size.x, texture_size.y));
 	m_Sprite.setOrigin(texture_size.x / 2, texture_size.y / 2);
+	m_Sprite.setPosition(position.x * 30, position.y * 30);
 	/* --- Physics settings --- */
 
 	bodyDef.type = b2_dynamicBody;
@@ -40,6 +42,8 @@ Arrow::Arrow (b2Vec2 position, b2Vec2 velocity, b2World& physic_world, uint16 ca
 	/* ------------------------- */
 
 	body->SetLinearVelocity(b2Vec2(velocity.x * m_moveSpeed, velocity.y * m_moveSpeed));
+
+	std::cout << "Position arrow spawn : " << m_position.x << " / " << m_position.x << std::endl;
 }
 
 void Arrow::update()
