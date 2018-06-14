@@ -42,8 +42,6 @@ Arrow::Arrow (b2Vec2 position, b2Vec2 velocity, b2World& physic_world, uint16 ca
 	/* ------------------------- */
 
 	body->SetLinearVelocity(b2Vec2(velocity.x * m_moveSpeed, velocity.y * m_moveSpeed));
-
-	std::cout << "Position arrow spawn : " << m_position.x << " / " << m_position.x << std::endl;
 }
 
 void Arrow::update()

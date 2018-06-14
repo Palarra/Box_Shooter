@@ -89,10 +89,12 @@ void World::update()
 	m_player.update();
 	m_player.draw(m_window);
 
-	mtx.lock();
-	m_ennemy_player.update();
-	m_ennemy_player.draw(m_window);
-	mtx.unlock();
+	if (mtx.try_lock())
+	{
+		m_ennemy_player.update();
+		m_ennemy_player.draw(m_window);
+		mtx.unlock();
+	}
 
 	sf::Packet packet;
 	packet << m_player;
@@ -120,9 +122,11 @@ void World::receiveFromServer()
 		}
 		else
 		{
-			mtx.lock();
-			m_ennemy_player.extractDataEnnemyPlayer(packet);
-			mtx.unlock();
+			if (mtx.try_lock())
+			{
+				m_ennemy_player.extractDataEnnemyPlayer(packet);
+				mtx.unlock();
+			}
 		}
 	}
 }

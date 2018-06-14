@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "CollisionCategorie.h"
 
-Player::Player(b2World& physic_world, std::string name, b2Vec2 position) : Actor(physic_world), m_cadence(25.0f), m_timer_fire(1 /m_cadence), m_timer_stun(1.0f)
+Player::Player(b2World& physic_world, std::string name, b2Vec2 position) : Actor(physic_world), m_cadence(5.0f), m_timer_fire(1 /m_cadence), m_timer_stun(1.0f)
 {
 	m_moveSpeed = 15;
 	m_isShooting = false;

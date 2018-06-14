@@ -116,9 +116,9 @@ void World::update()
 	m_player2.update();
 	m_player2.draw(m_window);
 
-	m_physic_world.Step(deltaTime, velocityIterations, positionIterations);
 
-	sendAllClients();
+	sendAllClients(); /* Cette étape est faite avant pour éviter d'avoir un retard sur les clients du départ */
+	m_physic_world.Step(deltaTime, velocityIterations, positionIterations);	
 }
 
 void World::receiveClient1()
@@ -128,9 +128,7 @@ void World::receiveClient1()
 		/* On recçoit le paquet du client 1 */
 		sf::Packet packet;
 		client1.receive(packet);
-		std::cout << "Client 1 :" << std::endl;
 		packet >> m_player1;
-
 		m_player1.printInputs();
 	}	
 }
@@ -141,9 +139,7 @@ void World::receiveClient2()
 	{
 		sf::Packet packet;
 		client2.receive(packet);
-		std::cout << "Client 2 :" << std::endl;
 		packet >> m_player2;
-
 		m_player2.printInputs();
 	}
 }
@@ -222,7 +218,6 @@ void World::sendToClient2()
 		if (!bullets[i]->isSend())
 		{
 			c2_packet_to_send2 << bullets[i]->getPosition().x << bullets[i]->getPosition().y;
-			//std::cout << "On envoie la position :" << bullets[i]->getPosition().x << " / " << bullets[i]->getPosition().y << std::endl;
 			c2_packet_to_send2 << bullets[i]->getVelocity().x << bullets[i]->getVelocity().y;
 			bullets[i]->setisSend(true);
 		}
